@@ -3,19 +3,20 @@ package com.example.jdbcdemo.domain;
 public class Movie {
 	
 	private long id;
-	
+	private static long counter = 0;
 	private String typ;
 	private String name;
-	private int yob;
 	private String dataWydania;
 	
 	public Movie() {
 	}
 	
-	public Movie(String name, int yob) {
+	public Movie(String name, String dataWydania, String typ,) {
 		super();
 		this.name = name;
-		this.yob = yob;
+		this.dataWydania = dataWydania;
+		this.typ = typ;
+		id = counter++;
 	}
 	public long getId() {
 		return id;
@@ -29,19 +30,13 @@ public class Movie {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getYob() {
-		return yob;
-	}
-	public void setYob(int yob) {
-		this.yob = yob;
-	}
 	public String getDataWydania() {
 		return dataWydania;
 	}
 	public void setDataWydania(String dataWydania) {
 		this.dataWydania = dataWydania;
 	}
-	public String typ() {
+	public String getTyp() {
 		return typ;
 	}
 	public void setTyp(String typ) {
