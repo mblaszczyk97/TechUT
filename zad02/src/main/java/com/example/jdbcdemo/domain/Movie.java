@@ -1,4 +1,6 @@
-package com.example.jdbcdemo.domain;
+package com.example.jdbcdemo.service;
+
+import java.sql.Date;
 
 public class Movie {
 	
@@ -6,35 +8,30 @@ public class Movie {
 	private static long counter = 0;
 	private String typ;
 	private String name;
-	private String dataWydania;
+	private Date dataWydania;
 	
 	public Movie() {
+		super();
 	}
 	
-	public Movie(String name, String dataWydania, String typ,) {
+	public Movie(String name, Date dataWydania, String typ) {
 		super();
 		this.name = name;
 		this.dataWydania = dataWydania;
 		this.typ = typ;
-		id = counter++;
 	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDataWydania() {
+	public Date getDataWydania() {
 		return dataWydania;
 	}
-	public void setDataWydania(String dataWydania) {
-		this.dataWydania = dataWydania;
+	public void setDataWydania(Date date) {
+		this.dataWydania = date;
 	}
 	public String getTyp() {
 		return typ;
@@ -42,4 +39,8 @@ public class Movie {
 	public void setTyp(String typ) {
 		this.typ = typ;
 	}
+	
+	public static final String NAME = "name";
+    public static final String DATA_WYDANIA = "dataWydania";
+    public static final String TYP = "typ";
 }
