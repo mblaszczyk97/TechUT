@@ -1,15 +1,18 @@
 package com.example.jdbcdemo.service;
 
+import java.sql.SQLException;
 import java.util.List;
-
-import com.example.jdbcdemo.domain.Movie;
 
 public interface MovieManager {
 	
-	public int addMovie(Movie movie);
+	public int addMovie(Movie movie) throws SQLException;
+	void addAllMovies(List<Movie> movies);
 	public List<Movie> getAllMovies();
-	
-	/* batch insert - transactional */
-	public void addAllMovie(List<Movie> movies);
+
+	Movie getMovieByName(String name);
+
+    void deleteMovieByName(String name);
+
+    void deleteAllMovies();
 
 }
