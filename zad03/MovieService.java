@@ -164,7 +164,7 @@ public class MovieService implements MovieManager{
             ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 
             while (rs.next()) {
-                if ("BoardGame".equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
+                if ("Movie".equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
                     tableExists = true;
                     break;
                 }
