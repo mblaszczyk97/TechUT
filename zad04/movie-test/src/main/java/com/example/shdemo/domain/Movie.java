@@ -19,18 +19,18 @@ import javax.persistence.TemporalType;
 
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = "movie.all", query = "Select p from Movie p"),
-	@NamedQuery(name = "movie.byPin", query = "Select p from Movie p where p.pin = :pin")
+	@NamedQuery(name = "movie.all", query = "Select m from Movie m"),
+	@NamedQuery(name = "movie.byTyp", query = "Select m from Movie m where m.typ = :typ")
 })
 public class Movie {
 
 	private Long id;
 
-	private String firstName = "unknown";
-	private String pin = "";
-	private Date registrationDate = new Date();
+	private String nazwa = "unknown";
+	private String typ = "";
+	private Date dataWydania = new Date();
 
-	private List<Car> cars = new ArrayList<Car>();
+	private List<Producent> producents = new ArrayList<Producent>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,35 +41,35 @@ public class Movie {
 		this.id = id;
 	}
 	
-	public String getFirstName() {
-		return firstName;
+	public String getNazwa() {
+		return nazwa;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setNazwa(String nazwa) {
+		this.nazwa = nazwa;
 	}
 
 	@Column(unique = true, nullable = false)
-	public String getPin() {
-		return pin;
+	public String getTyp() {
+		return typ;
 	}
-	public void setPin(String pin) {
-		this.pin = pin;
+	public void setTyp(String typ) {
+		this.typ = typ;
 	}
 
 	@Temporal(TemporalType.DATE)
-	public Date getRegistrationDate() {
-		return registrationDate;
+	public Date getDataWydania() {
+		return dataWydania;
 	}
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
+	public void setDataWydania(Date dataWydania) {
+		this.dataWydania = dataWydania;
 	}
 
 	// Be careful here, both with lazy and eager fetch type
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	public List<Car> getCars() {
-		return cars;
+	public List<Producent> getProducents() {
+		return producents;
 	}
-	public void setCars(List<Car> cars) {
-		this.cars = cars;
+	public void setProducents(List<Producent> producents) {
+		this.producents = producents;
 	}
 }
