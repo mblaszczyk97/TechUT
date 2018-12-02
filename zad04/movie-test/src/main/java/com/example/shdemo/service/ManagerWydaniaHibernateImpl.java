@@ -28,8 +28,10 @@ public class ManagerWydaniaHibernateImpl implements ManagerWydania {
 	
 	@Override
 	public void addMovie(Movie movie) {
+		//sessionFactory.getCurrentSession().getTransaction().begin();
 		movie.setId(null);
 		sessionFactory.getCurrentSession().persist(movie);
+		//sessionFactory.getCurrentSession().getTransaction().commit();
 	}
 	
 	@Override
@@ -37,7 +39,6 @@ public class ManagerWydaniaHibernateImpl implements ManagerWydania {
 		movie = (Movie) sessionFactory.getCurrentSession().get(Movie.class,
 				movie.getId());
 		
-		// lazy loading here
 		for (Producent producent : movie.getProducents()) {
 			producent.setCzyWydal(false);
 			sessionFactory.getCurrentSession().update(producent);

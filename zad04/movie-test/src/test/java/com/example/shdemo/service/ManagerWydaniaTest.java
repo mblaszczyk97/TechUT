@@ -37,11 +37,10 @@ public class ManagerWydaniaTest {
 	private final String KRAJ_2 = "USA";
 
 	@Test
-	public void addClientCheck() {
+	public void addMovieCheck() {
 
 		List<Movie> retrievedClients = managerWydania.getAllMovies();
 
-		// If there is a client with PIN_1 delete it
 		for (Movie client : retrievedClients) {
 			if (client.getTyp().equals(TYP_1)) {
 				managerWydania.deleteMovie(client);
@@ -51,37 +50,33 @@ public class ManagerWydaniaTest {
 		Movie movie = new Movie();
 		movie.setNazwa(NAME_1);
 		movie.setTyp(TYP_1);
-		// ... other properties here
 
-		// Pin is Unique
 		managerWydania.addMovie(movie);
 
 		Movie retrievedClient = managerWydania.findMovieByTyp(TYP_1);
 
 		assertEquals(NAME_1, retrievedClient.getNazwa());
 		assertEquals(TYP_1, retrievedClient.getTyp());
-		// ... check other properties here
+
 	}
 
 	@Test
-	public void addCarCheck() {
+	public void addProducentCheck() {
 
 		Producent producent = new Producent();
 		producent.setKraj(KRAJ_1);
 		producent.setNazwaProducenta(NAZWA_PRODUCENTA_1);
-		// ... other properties here
+		
+		Long producentId = managerWydania.addProducent(producent);
 
-		Long carId = managerWydania.addProducent(producent);
-
-		Producent retrievedCar = managerWydania.findProducentById(carId);
-		assertEquals(KRAJ_1, retrievedCar.getKraj());
-		assertEquals(NAZWA_PRODUCENTA_1, retrievedCar.getNazwaProducenta());
-		// ... check other properties here
+		Producent retrievedProducent = managerWydania.findProducentById(producentId);
+		assertEquals(KRAJ_1, retrievedProducent.getKraj());
+		assertEquals(NAZWA_PRODUCENTA_1, retrievedProducent.getNazwaProducenta());
 
 	}
 
 	@Test
-	public void sellCarCheck() {
+	public void wydanieCheck() {
 
 		Movie movie = new Movie();
 		movie.setNazwa(NAME_2);
@@ -89,26 +84,26 @@ public class ManagerWydaniaTest {
 
 		managerWydania.addMovie(movie);
 
-		Movie retrievedPerson = managerWydania.findMovieByTyp(TYP_2);
+		Movie retrievedMovie = managerWydania.findMovieByTyp(TYP_2);
 
 		Producent producent = new Producent();
 		producent.setKraj(KRAJ_2);
 		producent.setNazwaProducenta(NAZWA_PRODUCENTA_2);
 
-		Long carId = managerWydania.addProducent(producent);
+		Long producentId = managerWydania.addProducent(producent);
 
-		managerWydania.dajProducentaDoFilmu(retrievedPerson.getId(), carId);
+		managerWydania.dajProducentaDoFilmu(retrievedMovie.getId(), producentId);
 
-		List<Producent> ownedCars = managerWydania.getWydaneFilmy(retrievedPerson);
+		List<Producent> producenciWydanie = managerWydania.getWydaneFilmy(retrievedMovie);
 
-		assertEquals(1, ownedCars.size());
-		assertEquals(KRAJ_2, ownedCars.get(0).getKraj());
-		assertEquals(NAZWA_PRODUCENTA_2, ownedCars.get(0).getNazwaProducenta());
+		assertEquals(1, producenciWydanie.size());
+		assertEquals(KRAJ_2, producenciWydanie.get(0).getKraj());
+		assertEquals(NAZWA_PRODUCENTA_2, producenciWydanie.get(0).getNazwaProducenta());
 	}
 
-	// @Test -
+	// @Test
 	public void disposeCarCheck() {
-		// Do it yourself
+
 	}
 
 }
