@@ -19,7 +19,5 @@ public interface ManagerWydania {
 
 	List<Producent> getWydaneFilmy(Movie movie);
 	void dajProducentaDoFilmu(Long personId, Long producentId);
-	Movie findMovieById(Long id);
-	Movie findMovieByNazwa(String nazwa);
 
 }

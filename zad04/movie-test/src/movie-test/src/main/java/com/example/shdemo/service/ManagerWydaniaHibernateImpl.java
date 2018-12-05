@@ -36,7 +36,8 @@ public class ManagerWydaniaHibernateImpl implements ManagerWydania {
 	
 	@Override
 	public void deleteMovie(Movie movie) {
-		movie = (Movie) sessionFactory.getCurrentSession().get(Movie.class, movie.getId());
+		movie = (Movie) sessionFactory.getCurrentSession().get(Movie.class,
+				movie.getId());
 		
 		for (Producent producent : movie.getProducents()) {
 			producent.setCzyWydal(false);
@@ -57,22 +58,13 @@ public class ManagerWydaniaHibernateImpl implements ManagerWydania {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Movie> getAllMovies() {
-		return sessionFactory.getCurrentSession().getNamedQuery("movie.all").list();
+		return sessionFactory.getCurrentSession().getNamedQuery("movie.all")
+				.list();
 	}
 
 	@Override
 	public Movie findMovieByTyp(String typ) {
 		return (Movie) sessionFactory.getCurrentSession().getNamedQuery("movie.byTyp").setString("typ", typ).uniqueResult();
-	}
-	
-	@Override
-	public Movie findMovieByNazwa(String nazwa) {
-		return (Movie) sessionFactory.getCurrentSession().getNamedQuery("movie.byNazwa").setString("nazwa", nazwa).uniqueResult();
-	}
-	
-	@Override
-	public Movie findMovieById(Long id) {
-		return (Movie) sessionFactory.getCurrentSession().getNamedQuery("movie.byId").setLong("id", id).uniqueResult();
 	}
 
 

@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -21,16 +20,14 @@ import javax.persistence.TemporalType;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "movie.all", query = "Select m from Movie m"),
-	@NamedQuery(name = "movie.byTyp", query = "Select m from Movie m where m.typ = :typ"),
-	@NamedQuery(name = "movie.byId", query = "Select m from Movie m where m.id = :id"),
-	@NamedQuery(name = "movie.byNazwa", query = "Select m from Movie m where m.nazwa = :nazwa")
+	@NamedQuery(name = "movie.byTyp", query = "Select m from Movie m where m.typ = :typ")
 })
 public class Movie {
 
 	private Long id;
 
-	private String nazwa = "Film1";
-	private String typ = "Rodzaj1";
+	private String nazwa = "unknown";
+	private String typ = "";
 	private Date dataWydania = new Date();
 
 	private List<Producent> producents = new ArrayList<Producent>();
@@ -67,7 +64,8 @@ public class Movie {
 		this.dataWydania = dataWydania;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// Be careful here, both with lazy and eager fetch type
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<Producent> getProducents() {
 		return producents;
 	}
