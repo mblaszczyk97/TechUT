@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.shdemo.domain.Producent;
 import com.example.shdemo.domain.Rezyser;
 import com.example.shdemo.domain.Movie;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
@@ -40,8 +43,9 @@ public class ManagerWydaniaTest {
 	private final String NAZWA_PRODUCENTA_2 = "FOX";
 	private final String KRAJ_2 = "USA";*/
 
+	
 	@Test
-	public void addMovieCheck() throws ParseException {
+	public void test1_addMovieCheck() throws ParseException {
 
 		List<Movie> retrievedClients = managerWydania.getAllMovies();
 
@@ -50,44 +54,78 @@ public class ManagerWydaniaTest {
 				managerWydania.deleteMovie(client);
 			}
 		}
-
+		//Ustawianie testu-------------------------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		String dateInString = "31-08-1982 10:20:56";
-		Date date = sdf.parse(dateInString);
+		Movie movie1 = new Movie();
+		movie1.setNazwa("Star-Wars");
+		movie1.setTyp("Sci-Fi");
+		movie1.setDataWydania(sdf.parse("31-08-1982 10:20:56"));
+		Movie movie2 = new Movie();
+		movie2.setNazwa("Kimino na wa");
+		movie2.setTyp("Drama");
+		movie2.setDataWydania(sdf.parse("22-08-2017 10:20:56"));
+		Movie movie3 = new Movie();
+		movie3.setNazwa("Lord of the Rings");
+		movie3.setTyp("Fantasy");
+		movie3.setDataWydania(sdf.parse("06-12-2001 10:20:56"));
+		managerWydania.addMovie(movie1);
+		managerWydania.addMovie(movie2);
+		managerWydania.addMovie(movie3);
+		//-----------------------------------------------------------------------
+
+		Movie retrievedClient = managerWydania.findMovieByTyp("Drama");
+
+		assertEquals("Kimino na wa", retrievedClient.getNazwa());
+		assertEquals("Drama", retrievedClient.getTyp());
 		
-		wstawFilm(1l,"Star", "Sci-Fi",date);
-		wstawFilm(2l,"Name", "Drama", date);
-		wstawFilm(3l,"1999", "Documental", date);
+		//czyszczenie------------------------------------------------------------
+		managerWydania.deleteMovie(movie1);
+		managerWydania.deleteMovie(movie2);
+		managerWydania.deleteMovie(movie3);
+		//-----------------------------------------------------------------------
 
-
-		Movie retrievedClient = managerWydania.findMovieByTyp("Sci-Fi");
-
-		assertEquals("Star", retrievedClient.getNazwa());
-		assertEquals("Sci-Fi", retrievedClient.getTyp());
-
-	}
-	
-	public void wstawFilm(Long id, String name, String typ, Date dataWydania)
-	{
-		Movie movie = new Movie();
-		movie.setId(id);
-		movie.setNazwa(name);
-		movie.setTyp(typ);
-		movie.setDataWydania(dataWydania);
-		managerWydania.addMovie(movie);
 	}
 	
 	@Test
-	public void findById() throws ParseException {
-		
-		Movie retrievedClient = managerWydania.findMovieById(1l);
+	public void test2_findById() throws ParseException {
+		//Ustawianie testu-------------------------------------------------------
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		Movie movie1 = new Movie();
+		movie1.setNazwa("Star-Wars");
+		movie1.setTyp("Sci-Fi");
+		movie1.setDataWydania(sdf.parse("31-08-1982 10:20:56"));
+		managerWydania.addMovie(movie1);
+		//-----------------------------------------------------------------------
+		Movie retrievedClient = managerWydania.findMovieById(movie1.getId());
 
-		assertEquals("Star", retrievedClient.getNazwa());
+		assertEquals("Star-Wars", retrievedClient.getNazwa());
 		assertEquals("Sci-Fi", retrievedClient.getTyp());
+		
+		//czyszczenie------------------------------------------------------------
+		managerWydania.deleteMovie(movie1);
+		//-----------------------------------------------------------------------
 	}
 	
 	@Test
-	public void dodajDoRelacji() throws ParseException {
+	public void test3_dodajDoRelacji() throws ParseException {
+		//Ustawianie testu-------------------------------------------------------
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		Movie movie1 = new Movie();
+		movie1.setNazwa("Star-Wars");
+		movie1.setTyp("Sci-Fi");
+		movie1.setDataWydania(sdf.parse("31-08-1982 10:20:56"));
+		Movie movie2 = new Movie();
+		movie2.setNazwa("Kimino na wa");
+		movie2.setTyp("Drama");
+		movie2.setDataWydania(sdf.parse("22-08-2017 10:20:56"));
+		Movie movie3 = new Movie();
+		movie3.setNazwa("Lord of the Rings");
+		movie3.setTyp("Fantasy");
+		movie3.setDataWydania(sdf.parse("06-12-2001 10:20:56"));
+		managerWydania.addMovie(movie1);
+		managerWydania.addMovie(movie2);
+		managerWydania.addMovie(movie3);
+		
 		
 		Producent producent1 = new Producent();
 		producent1.setNazwaProducenta("Marvel");
@@ -112,10 +150,18 @@ public class ManagerWydaniaTest {
 		managerWydania.addRezyser(rezyser1);
 		managerWydania.addRezyser(rezyser2);
 		
-		managerWydania.dajProducentaDoFilmu(1l, 1l);
-		managerWydania.dajProducentaDoFilmu(2l, 1l);
-		managerWydania.dajRezyseraDoFilmu(1l, 1l);
-		managerWydania.dajRezyseraDoFilmu(2l, 2l);
+		managerWydania.dajProducentaDoFilmu(movie1.getId(), 1l);
+		managerWydania.dajProducentaDoFilmu(movie2.getId(), 1l);
+		managerWydania.dajRezyseraDoFilmu(movie1.getId(), 1l);
+		managerWydania.dajRezyseraDoFilmu(movie2.getId(), 2l);
+		
+		/*managerWydania.deleteRezyser(rezyser1);
+		managerWydania.deleteRezyser(rezyser2);*/
+/*		managerWydania.deleteMovie(movie1);
+		managerWydania.deleteMovie(movie2);
+		managerWydania.deleteMovie(movie3);*/
+		
+		//-----------------------------------------------------------------------
 		
 		//sprawdzamy tylko czy błędów nie ma przy relacjach
 		assertEquals(1, 1);
