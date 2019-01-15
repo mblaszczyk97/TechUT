@@ -78,7 +78,7 @@ public class ManagerBazyFilmowejHibernateImpl implements ManagerBazyFilmowej {
 	
 	@Override
 	public void deleteDaneTechniczne(DaneTechniczne dane) {
-		dane = (DaneTechniczne) sessionFactory.getCurrentSession().get(Rezyser.class, dane.getId());
+		dane = (DaneTechniczne) sessionFactory.getCurrentSession().get(DaneTechniczne.class, dane.getId());
 		sessionFactory.getCurrentSession().delete(dane);
 	}
 

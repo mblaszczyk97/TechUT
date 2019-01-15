@@ -7,9 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -261,6 +258,14 @@ public class ManagerBazyFilmowejTest {
 		rezyser2.setNazwisko("Wan");
 		rezyser2.setDataUrodzenia(new Date());
 
+		DaneTechniczne dane1 = new DaneTechniczne();
+		dane1.setMinut_filmu(180);
+		dane1.setOpis("Film opowiada historię bardzo dawno temu w odległej galaktyce");
+		dane1.setRozdzielczosc("4:3");
+		dane1.setTyp_kamery("analogowa");
+		managerBazyFilmowej.addDaneTechniczne(dane1);
+
+		
 		managerBazyFilmowej.addProducent(producent1);
 		managerBazyFilmowej.addProducent(producent2);
 		managerBazyFilmowej.addRezyser(rezyser1);
@@ -269,10 +274,12 @@ public class ManagerBazyFilmowejTest {
 		List<Rezyser> retrievedClients = managerBazyFilmowej.getAllRezyserzy();
 		List<Movie> retrievedClients1 = managerBazyFilmowej.getAllMovies();
 		List<Producent> retrievedClients2 = managerBazyFilmowej.getAllProducenci();
+		List<DaneTechniczne> retrievedClients3 = managerBazyFilmowej.getAllDaneTechniczne();
 
 		assertEquals(retrievedClients.size(), 2);
 		assertEquals(retrievedClients1.size(), 3);
 		assertEquals(retrievedClients2.size(), 2);
+		assertEquals(retrievedClients3.size(), 1);
 
 	}
 	
@@ -314,6 +321,13 @@ public class ManagerBazyFilmowejTest {
 		rezyser2.setNazwisko("Wan");
 		rezyser2.setDataUrodzenia(new Date());
 
+		DaneTechniczne dane1 = new DaneTechniczne();
+		dane1.setMinut_filmu(180);
+		dane1.setOpis("Film opowiada historię bardzo dawno temu w odległej galaktyce");
+		dane1.setRozdzielczosc("4:3");
+		dane1.setTyp_kamery("analogowa");
+		
+		managerBazyFilmowej.addDaneTechniczne(dane1);
 		managerBazyFilmowej.addProducent(producent1);
 		managerBazyFilmowej.addProducent(producent2);
 		managerBazyFilmowej.addRezyser(rezyser1);
@@ -322,16 +336,18 @@ public class ManagerBazyFilmowejTest {
 		managerBazyFilmowej.deleteMovie(movie2);
 		managerBazyFilmowej.deleteProducent(producent1);
 		managerBazyFilmowej.deleteRezyser(rezyser1);
+		managerBazyFilmowej.deleteDaneTechniczne(dane1);
 		
 		List<Rezyser> retrievedClients = managerBazyFilmowej.getAllRezyserzy();
 		List<Movie> retrievedClients1 = managerBazyFilmowej.getAllMovies();
 		List<Producent> retrievedClients2 = managerBazyFilmowej.getAllProducenci();
-		List<Producent> retrievedClients3 = managerBazyFilmowej.getAllProducencizFilmami();
+		List<DaneTechniczne> retrievedClients3 = managerBazyFilmowej.getAllDaneTechniczne();
 		
 		
 		assertEquals(retrievedClients.size(), 1);
 		assertEquals(retrievedClients1.size(), 1);
 		assertEquals(retrievedClients2.size(), 1);
+		assertEquals(retrievedClients3.size(), 0);
 
 	}
 	
@@ -342,23 +358,35 @@ public class ManagerBazyFilmowejTest {
 		movie1.setNazwa("Star-Wars");
 		movie1.setTyp("Sci-Fi");
 		movie1.setDataWydania(sdf.parse("31-08-1982 10:20:56"));
+		
 		Producent producent1 = new Producent();
 		producent1.setNazwaProducenta("Marvel");
 		producent1.setKraj("USA");
+		
 		Rezyser rezyser1 = new Rezyser();
 		rezyser1.setImie("James");
 		rezyser1.setNazwisko("Gunn");
 		rezyser1.setDataUrodzenia(new Date());
+		
+		DaneTechniczne dane1 = new DaneTechniczne();
+		dane1.setMinut_filmu(120);
+		dane1.setOpis("Film opowiada historię bardzo dawno temu w odległej galaktyce");
+		dane1.setRozdzielczosc("4:3");
+		dane1.setTyp_kamery("analogowa");
+		
+		managerBazyFilmowej.addDaneTechniczne(dane1);
 		managerBazyFilmowej.addMovie(movie1);
 		managerBazyFilmowej.addProducent(producent1);
 		managerBazyFilmowej.addRezyser(rezyser1);
 		Movie retrievedClient = managerBazyFilmowej.findMovieById(movie1.getId());
 		Producent retrievedClient1 = managerBazyFilmowej.findProducentById(producent1.getId());
 		Rezyser retrievedClient2 = managerBazyFilmowej.findRezyserById(rezyser1.getId());
+		DaneTechniczne retrievedClient3 = managerBazyFilmowej.getAllDaneTechniczne().get(0);
 		
 		assertEquals(retrievedClient.getNazwa(), "Star-Wars");
 		assertEquals(retrievedClient1.getNazwaProducenta(), "Marvel");
 		assertEquals(retrievedClient2.getNazwisko(), "Gunn");
+		assertEquals(retrievedClient3.getMinut_filmu(), 120);
 	}
 	
 	@Test
