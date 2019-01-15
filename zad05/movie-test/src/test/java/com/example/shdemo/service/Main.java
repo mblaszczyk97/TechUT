@@ -9,7 +9,7 @@ public class Main {
 	
 	@Autowired
 	static
-	ManagerWydania managerWydania;
+	ManagerBazyFilmowej managerBazyFilmowej;
 	
 	public static void wstawFilm(Long id, String name, String typ)
 	{
@@ -17,7 +17,7 @@ public class Main {
 		movie.setId(id);
 		movie.setNazwa(name);
 		movie.setTyp(typ);
-		managerWydania.addMovie(movie);
+		managerBazyFilmowej.addMovie(movie);
 	}
 	
 	public static void main(String[] args) {

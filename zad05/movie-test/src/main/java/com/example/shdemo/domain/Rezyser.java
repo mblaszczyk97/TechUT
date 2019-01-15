@@ -11,10 +11,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "rezyser.byId", query = "Select m from Rezyser m where m.id = :id"),
+		@NamedQuery(name = "rezyser.all", query = "Select m from Rezyser m"),
+		@NamedQuery(name = "rezyser.Filmu", query = "Select p from Rezyser p left join p.movies m where m.nazwa = :nazwa"),
+		@NamedQuery(name = "rezyser.FilmuKategorii", query = "Select p from Rezyser p left join p.movies m where m.typ = :typ")
+
+
+})
 public class Rezyser {
 	
 	private Long id;
