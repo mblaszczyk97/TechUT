@@ -56,7 +56,6 @@ public class Movie {
 		this.nazwa = nazwa;
 	}
 
-	@Column(unique = true, nullable = false)
 	public String getTyp() {
 		return typ;
 	}

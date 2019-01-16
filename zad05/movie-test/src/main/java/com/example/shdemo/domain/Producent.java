@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 @NamedQueries({
 		@NamedQuery(name = "producent.all", query = "Select m from Producent m"),
 		@NamedQuery(name = "producent.czyWydal", query = "Select p from Producent p where p.czyWydal = false"),
-		@NamedQuery(name = "producent.Filmu", query = "Select p from Producent p left join p.movies m"),
 		@NamedQuery(name = "producent.danegoFilmu", query = "Select p from Producent p left join p.movies m where m.nazwa = :nazwa")
 
 })

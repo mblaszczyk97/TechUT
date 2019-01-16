@@ -121,11 +121,6 @@ public class ManagerBazyFilmowejHibernateImpl implements ManagerBazyFilmowej {
 		return sessionFactory.getCurrentSession().getNamedQuery("danetechniczne.all").list();
 	}
 	
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Producent> getAllProducencizFilmami() {
-		return sessionFactory.getCurrentSession().getNamedQuery("producent.Filmu").list();
-	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
@@ -142,7 +137,7 @@ public class ManagerBazyFilmowejHibernateImpl implements ManagerBazyFilmowej {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Rezyser> getAllRezyserowDanejKategoriiFilmow(String typ) {
-		return sessionFactory.getCurrentSession().getNamedQuery("rezyser.FilmuKategorii").setString("nazwa", typ).list();
+		return sessionFactory.getCurrentSession().getNamedQuery("rezyser.FilmuKategorii").setString("typ", typ).list();
 	}
 	
 	@Override

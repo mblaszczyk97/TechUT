@@ -18,7 +18,6 @@ public interface ManagerBazyFilmowej {
 	List<Rezyser> getAllRezyserowDanegoFilmu(String nazwa);
 	List<Producent> getAllProducenci();
 	List<Rezyser> getAllRezyserzy();
-	List<Producent> getAllProducencizFilmami();
 	List<Movie> findMovieByTyp(String typ);
 	List<Producent> getProducentKtoryWydal();
 	List<Movie> getWydaneFilmy(Producent producent);
