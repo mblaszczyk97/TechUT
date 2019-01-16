@@ -1,6 +1,7 @@
 package com.example.shdemo.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -212,4 +213,14 @@ public class ManagerBazyFilmowejHibernateImpl implements ManagerBazyFilmowej {
 	}
 
 
+	@Override
+    public void removeFilmyWydanePo(Date date) {
+        List<Movie> movies = getAllMovies();
+        for(Movie movie : movies){
+            if(movie.getDataWydania().after(date)){
+            	deleteMovie(movie);
+            }
+        }
+    }
+	
 }

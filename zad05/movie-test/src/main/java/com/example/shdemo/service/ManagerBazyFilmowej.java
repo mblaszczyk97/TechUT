@@ -1,5 +1,6 @@
 package com.example.shdemo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.shdemo.domain.Producent;
@@ -44,6 +45,8 @@ public interface ManagerBazyFilmowej {
 	void updateProducent(Producent producent);
 	void updateRezyser(Rezyser rezyser);
 	void updateDaneTechniczne(DaneTechniczne daneTechniczne);
+	
+	void removeFilmyWydanePo(Date date);
 
 
 }

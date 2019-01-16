@@ -68,6 +68,42 @@ public class ManagerBazyFilmowejTest {
 	}
 	
 	@Test
+	public void checkUsuwanieFilmuPrzedData() throws ParseException {
+		
+/* Tylko do ręcznego wypisywania sobie
+ * bardzo przydatne
+ * 		List<Movie> retrievedClients = managerWydania.getAllMovies();
+
+		for (Movie client : retrievedClients) {
+			if (client.getTyp().equals("Fantasy")) {
+				managerWydania.deleteMovie(client);
+			}
+		}*/
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		Movie movie1 = new Movie();
+		movie1.setNazwa("Star-Wars");
+		movie1.setTyp("Sci-Fi");
+		movie1.setDataWydania(sdf.parse("31-08-1982 10:20:56"));
+		Movie movie2 = new Movie();
+		movie2.setNazwa("Kimino na wa");
+		movie2.setTyp("Drama");
+		movie2.setDataWydania(sdf.parse("22-08-2017 10:20:56"));
+		Movie movie3 = new Movie();
+		movie3.setNazwa("Lord of the Rings");
+		movie3.setTyp("Fantasy");
+		movie3.setDataWydania(sdf.parse("06-12-2001 10:20:56"));
+		managerBazyFilmowej.addMovie(movie1);
+		managerBazyFilmowej.addMovie(movie2);
+		managerBazyFilmowej.addMovie(movie3);
+
+		managerBazyFilmowej.removeFilmyWydanePo(sdf.parse("01-01-2001 00:00:00"));
+		List<Movie> retrievedClient = managerBazyFilmowej.getAllMovies();
+
+		assertEquals(1, retrievedClient.size());
+
+	}
+	
+	@Test
 	public void checkZnajdzFilmPrzezId() throws ParseException {
 		//Ustawianie testu-------------------------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -140,7 +176,6 @@ public class ManagerBazyFilmowejTest {
 		
 		managerBazyFilmowej.dajRezyseraDoFilmu(movie1.getId(), rezyser1.getId());
 		managerBazyFilmowej.dajRezyseraDoFilmu(movie2.getId(), rezyser2.getId());
-		
 		List<Rezyser> retrievedClient = managerBazyFilmowej.getAllRezyserowDanejKategoriiFilmow("Sci-Fi");
 		assertEquals(2, retrievedClient.size());
 
